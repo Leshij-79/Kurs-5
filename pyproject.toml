@@ -35,6 +35,8 @@ django-cors-headers = "^4.9.0"
 redis = "^7.4.0"
 celery = "^5.6.3"
 django-celery-beat = "^2.9.0"
+djangorestframework-stubs = "^3.17.0"
+celery-types = "^0.26.0"
 
 
 [build-system]
