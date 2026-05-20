@@ -9,7 +9,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
-STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 
 DEBUG = True
 
@@ -114,10 +113,10 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
-# SIMPLE_JWT = {
-#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=150),
-#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-# }
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=150),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "API Documentation",  # Заголовок для документации

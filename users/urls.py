@@ -1,16 +1,13 @@
-from django.urls import path
+from rest_framework.routers import SimpleRouter
 
 from users.apps import UsersConfig
-from users.views import UserCreateAPIView
+from users.views import UsersViewSet
 
 app_name = UsersConfig.name
 
-# router = SimpleRouter()
-# router.register("", UsersViewSet)
+router_user = SimpleRouter()
+router_user.register("", UsersViewSet)
 
-urlpatterns = [
-    path("register/", UserCreateAPIView.as_view(), name="register"),
-    # path("payments/", UserPaymentListAPIView.as_view(), name="payments_list"),
-    # path("login/", TokenObtainPairView.as_view(permission_classes=(AllowAny,)), name="login"),
-    # path("token/refresh/", TokenRefreshView.as_view(permission_classes=(AllowAny,)), name="token_refresh"),
-]
+urlpatterns = []
+
+urlpatterns += router_user.urls
