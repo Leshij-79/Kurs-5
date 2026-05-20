@@ -7,30 +7,25 @@ from users.paginators import UserPagePagination
 from users.serializers import UserSerializer
 
 
-# class UserCreateAPIView(CreateAPIView):
-#     queryset = CustomUser.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = (AllowAny,)
-#
-#     def perform_create(self, serializer):
-#         user = serializer.save(is_active=True)
-#         user.set_password(user.password)
-#         user.save()
+class UserCreateAPIView(CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (AllowAny,)
+    pagination_class = UserPagePagination
+
+    def perform_create(self, serializer):
+        user = serializer.save(is_active=True)
+        user.set_password(user.password)
+        user.save()
 
 class UsersViewSet(ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    pagination_class = UserPagePagination
 
-    def perform_create(self, serializer):
-        user = serializer.save()
-        user.is_active = True
-        user.save()
-
-    def get_queryset(self):
-        user = self.request.user
-
-        if user.groups.filter(name="Moderator").exists():
-            return CustomUser.objects.all()
-
-        return CustomUser.objects.filter(email=user)
+    # def get_queryset(self):
+    #     user = self.request.user
+    #
+    #     if user.groups.filter(name="Moderator").exists():
+    #         return CustomUser.objects.all()
+    #
+    #     return CustomUser.objects.filter(email=user)
