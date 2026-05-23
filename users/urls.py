@@ -8,8 +8,8 @@ from users.views import UserCreateAPIView, UsersViewSet
 
 app_name = UsersConfig.name
 
-router = SimpleRouter()
-router.register("", UsersViewSet)
+users_router = SimpleRouter()
+users_router.register("users", UsersViewSet)
 
 urlpatterns = [
     path("register/", UserCreateAPIView.as_view(), name="register"),
@@ -17,4 +17,4 @@ urlpatterns = [
     path("token/refresh/", TokenRefreshView.as_view(permission_classes=(AllowAny,)), name="token_refresh"),
 ]
 
-urlpatterns += router.urls
+urlpatterns += users_router.urls

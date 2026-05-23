@@ -170,9 +170,11 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 # Настройка периодического запуска
-# CELERY_BEAT_SCHEDULE = {
-#     "deactivate_users": {
-#         "task": "lms.tasks.deactivate_users",  # Путь к задаче
-#         "schedule": timedelta(minutes=60),  # Расписание выполнения задачи (например, каждые 60 минут)
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    "send_telegram_message": {
+        "task": "kurs5.tasks.send_telegram_bot_message",  # Путь к задаче
+        "schedule": timedelta(days=1),  # Расписание выполнения задачи (например, каждый день)
+    },
+}
+
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")

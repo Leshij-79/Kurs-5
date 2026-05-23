@@ -11,7 +11,16 @@ class CustomUser(AbstractUser):
 
     # avatar = models.ImageField(upload_to="media/avatars", blank=True, null=True, verbose_name="Аватар")
     phone_number = models.CharField(blank=True, null=True, max_length=15, verbose_name="Номер телефона")
+
     city = models.CharField(blank=True, null=True, max_length=50, verbose_name="Город")
+
+    tg_id = models.CharField(
+        blank=True,
+        null=True,
+        max_length=50,
+        verbose_name="Telegram ID",
+        help_text="Укажите Telegram ID",
+    )
 
     class Meta:
         verbose_name = "Пользователь"

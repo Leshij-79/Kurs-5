@@ -12,16 +12,28 @@ class CustomUserAdmin(UserAdmin):
         "first_name",
         "last_name",
         "email",
+        "phone_number",
+        "city",
+        "tg_id",
         "is_staff",
         "is_active",
         "date_joined",
         "is_superuser",
-        "phone_number",
-        "city",
     )
+
     search_fields = (
         "username",
         "email",
         "phone_number",
     )
+
     list_filter = ("email",)
+
+    fieldsets = UserAdmin.fieldsets + (
+        (
+            "Дополнительная информация",
+            {
+                "fields": ("phone_number", "city", "tg_id"),
+            },
+        ),
+    )
