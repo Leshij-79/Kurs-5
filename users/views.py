@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
@@ -16,6 +17,8 @@ class UserCreateAPIView(CreateAPIView):
     def perform_create(self, serializer):
         user = serializer.save(is_active=True)
         user.set_password(user.password)
+        moderator_group = Group.objects.get(name="Users")
+        user.groups.set([moderator_group])
         user.save()
 
 class UsersViewSet(ModelViewSet):

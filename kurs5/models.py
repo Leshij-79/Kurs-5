@@ -16,6 +16,15 @@ class Rewards(models.Model):
         help_text="Укажите признак приятной привычки",
     )
 
+    owner = models.ForeignKey(
+        CustomUser,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name="Владелец вознаграждения",
+        help_text="Укажите владельца вознаглаждения",
+    )
+
     class Meta:
         verbose_name = "Вознаграждение"
         verbose_name_plural = "Вознаграждения"
@@ -71,6 +80,8 @@ class Habits(models.Model):
 
     owner = models.ForeignKey(
         CustomUser,
+        blank=True,
+        null=True,
         on_delete=models.CASCADE,
         related_name="habits_owner",
         verbose_name="Владелец привычки",
