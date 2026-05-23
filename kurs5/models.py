@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from users.models import CustomUser
@@ -53,12 +54,20 @@ class Habits(models.Model):
     )
 
     time_complete = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(1, message="Значение не может быть меньше 1"),
+            MaxValueValidator(120, message="Значение не может быть больше 100"),
+        ],
         default=120,
         verbose_name="Время на выполнение привычки в секундах",
         help_text="Введите время на выполнение привычки в секундах",
     )
 
     periodicity = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(1, message="Значение не может быть меньше 1"),
+            MaxValueValidator(7, message="Значение не может быть больше 7"),
+        ],
         default=1,
         verbose_name="Периодичность привычки в днях",
         help_text="Введите периодичность привычки в днях",

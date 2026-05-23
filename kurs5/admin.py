@@ -35,10 +35,6 @@ class RewardsAdmin(admin.ModelAdmin):
         "is_habit",
     )
 
-    search_fields = (
-        "action",
-    )
+    search_fields = ("action",)
 
-    list_filter = (
-        "action",
-    )
+    list_filter = ("action",)

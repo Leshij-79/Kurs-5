@@ -1,8 +1,7 @@
+from django.urls import path
 from rest_framework.permissions import AllowAny
 from rest_framework.routers import SimpleRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
-from django.urls import path
 
 from users.apps import UsersConfig
 from users.views import UserCreateAPIView, UsersViewSet

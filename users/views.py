@@ -21,6 +21,7 @@ class UserCreateAPIView(CreateAPIView):
         user.groups.set([moderator_group])
         user.save()
 
+
 class UsersViewSet(ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
