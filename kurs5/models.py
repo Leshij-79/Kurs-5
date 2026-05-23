@@ -16,6 +16,14 @@ class Rewards(models.Model):
         help_text="Укажите признак приятной привычки",
     )
 
+    class Meta:
+        verbose_name = "Вознаграждение"
+        verbose_name_plural = "Вознаграждения"
+        ordering = ["action"]
+
+    def __str__(self):
+        return self.action
+
 
 class Habits(models.Model):
     habit = models.CharField(
