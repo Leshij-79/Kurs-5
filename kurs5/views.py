@@ -4,7 +4,6 @@ from rest_framework.viewsets import ModelViewSet
 from kurs5.models import Habits, Rewards
 from kurs5.paginators import PagePagination
 from kurs5.serializers import HabitsSerializer, RewardsSerializer
-from kurs5.services import send_telegram_message
 
 
 class RewardsViewSet(ModelViewSet):
@@ -13,11 +12,7 @@ class RewardsViewSet(ModelViewSet):
     pagination_class = PagePagination
 
     def perform_create(self, serializer):
-        course = serializer.save()
-        course.owner = self.request.user
-        course.save()
-
-        send_telegram_message()
+        serializer.save(owner=self.request.user)
 
     def get_queryset(self):
         user = self.request.user
@@ -31,9 +26,7 @@ class HabitsViewSet(ModelViewSet):
     pagination_class = PagePagination
 
     def perform_create(self, serializer):
-        course = serializer.save()
-        course.owner = self.request.user
-        course.save()
+        serializer.save(owner=self.request.user)
 
     def get_queryset(self):
         user = self.request.user
