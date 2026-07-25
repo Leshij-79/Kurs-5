@@ -22,7 +22,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test_db
+          POSTGRES_DB: kurs5
         ports:
           - 5432:5432
         options: >-
@@ -81,7 +81,7 @@ jobs:
     - name: Set environment variables
       run: | 
         echo "SECRET_KEY=django-insecure-ci-test-key" >> $GITHUB_ENV
-        echo "DB_NAME=test_db" >> $GITHUB_ENV
+        echo "DB_NAME=kurs5" >> $GITHUB_ENV
         echo "DB_USER=postgres" >> $GITHUB_ENV
         echo "DB_PASSWORD=postgres" >> $GITHUB_ENV
         echo "DB_HOST=localhost" >> $GITHUB_ENV
@@ -93,9 +93,9 @@ jobs:
         echo "REDIS_HOST=localhost" >> $GITHUB_ENV
         echo "GITHUB_ACTIONS=true" >> $GITHUB_ENV
 
-#    - name: Set Python path
-#      run: |
-#        echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+    - name: Set Python path
+      run: |
+        echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
 
     - name: Run migrations
       run: |
