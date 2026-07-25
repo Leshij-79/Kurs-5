@@ -79,36 +79,19 @@ jobs:
           ${{ runner.os }}-poetry-
 
     - name: Set environment variables
-      run: |  # Вполне возможно это и не надо будет если будет задан выше раздел env
-        cat > .env << EOF
-        SECRET_KEY=django-insecure-ci-test-key-change-in-production
-        DB_NAME=test_db
-        DB_USER=postgres
-        DB_PASSWORD=postgres
-        DB_HOST=127.0.0.1
-        DB_PORT=5432
-        EMAIL_HOST_USER=test@example.com
-        EMAIL_HOST_PASSWORD=test_password
-        CELERY_BROKER_URL=redis://redis:6379/0
-        CELERY_RESULT_BACKEND=redis://redis:6379/0
-        REDIS_HOST=redis
-        GITHUB_ACTIONS=true
-        TELEGRAM_BOT_TOKEN=dummy_token_for_tests
-        GITHUB_ACTIONS=true
-        EOF
-#        echo "SECRET_KEY=django-insecure-ci-test-key" >> $GITHUB_ENV
-#        echo "STRIPE_SECRET_KEY=sk_test_ci_dummy_key" >> $GITHUB_ENV
-#        echo "DB_NAME=lms" >> $GITHUB_ENV
-#        echo "DB_USER=postgres" >> $GITHUB_ENV
-#        echo "DB_PASSWORD=postgres" >> $GITHUB_ENV
-#        echo "DB_HOST=localhost" >> $GITHUB_ENV
-#        echo "DB_PORT=5432" >> $GITHUB_ENV
-#        echo "EMAIL_HOST_USER=test@example.com" >> $GITHUB_ENV
-#        echo "EMAIL_HOST_PASSWORD=test_password" >> $GITHUB_ENV
-#        echo "CELERY_BROKER_URL=redis://localhost:6379/0" >> $GITHUB_ENV
-#        echo "CELERY_RESULT_BACKEND=redis://localhost:6379/0" >> $GITHUB_ENV
-#        echo "REDIS_HOST=localhost" >> $GITHUB_ENV
-#        echo "GITHUB_ACTIONS=true" >> $GITHUB_ENV
+      run: | 
+        echo "SECRET_KEY=django-insecure-ci-test-key" >> $GITHUB_ENV
+        echo "DB_NAME=test_db" >> $GITHUB_ENV
+        echo "DB_USER=postgres" >> $GITHUB_ENV
+        echo "DB_PASSWORD=postgres" >> $GITHUB_ENV
+        echo "DB_HOST=localhost" >> $GITHUB_ENV
+        echo "DB_PORT=5432" >> $GITHUB_ENV
+        echo "EMAIL_HOST_USER=test@example.com" >> $GITHUB_ENV
+        echo "EMAIL_HOST_PASSWORD=test_password" >> $GITHUB_ENV
+        echo "CELERY_BROKER_URL=redis://localhost:6379/0" >> $GITHUB_ENV
+        echo "CELERY_RESULT_BACKEND=redis://localhost:6379/0" >> $GITHUB_ENV
+        echo "REDIS_HOST=localhost" >> $GITHUB_ENV
+        echo "GITHUB_ACTIONS=true" >> $GITHUB_ENV
 
 #    - name: Set Python path
 #      run: |
