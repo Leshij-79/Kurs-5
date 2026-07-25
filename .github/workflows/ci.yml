@@ -15,10 +15,6 @@ jobs:
     # needs: lint
     env:
       PYTHONPATH: $PWD
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-
     # Тут можно указать раздел env: и задать переменные из секретов
     services:
       postgres:
@@ -82,8 +78,22 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-poetry-
 
-#    - name: Set environment variables
-#      run: |  # Вполне возможно это и не надо будет если будет задан выше раздел env
+    - name: Set environment variables
+      run: |  # Вполне возможно это и не надо будет если будет задан выше раздел env
+        cat > .env << EOF
+        SECRET_KEY=${{ secrets.SECRET_KEY }}
+        DB_NAME=${{ secrets.DB_NAME }}
+        DB_USER=${{ secrets.DB_USER }}
+        DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+        DB_HOST=${{ secrets.DB_HOST }}
+        DB_PORT=${{ secrets.DB_PORT }}
+        EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}
+        EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}
+        CELERY_BROKER_URL=${{ secrets.CELERY_BROKER_UR }}
+        CELERY_RESULT_BACKEND=${{ secrets.CELERY_RESULT_BACKEND }}
+        REDIS_HOST=${{ secrets.REDIS_HOST }}
+        GITHUB_ACTIONS=true
+        EOF
 #        echo "SECRET_KEY=django-insecure-ci-test-key" >> $GITHUB_ENV
 #        echo "STRIPE_SECRET_KEY=sk_test_ci_dummy_key" >> $GITHUB_ENV
 #        echo "DB_NAME=lms" >> $GITHUB_ENV
