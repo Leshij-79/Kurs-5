@@ -80,22 +80,22 @@ jobs:
 
     - name: Set environment variables
       run: | 
-        echo "SECRET_KEY=django-insecure-ci-test-key" >> $GITHUB_ENV
-        echo "DB_NAME=kurs5" >> $GITHUB_ENV
-        echo "DB_USER=postgres" >> $GITHUB_ENV
-        echo "DB_PASSWORD=postgres" >> $GITHUB_ENV
-        echo "DB_HOST=localhost" >> $GITHUB_ENV
-        echo "DB_PORT=5432" >> $GITHUB_ENV
-        echo "EMAIL_HOST_USER=test@example.com" >> $GITHUB_ENV
-        echo "EMAIL_HOST_PASSWORD=test_password" >> $GITHUB_ENV
-        echo "CELERY_BROKER_URL=redis://localhost:6379/0" >> $GITHUB_ENV
-        echo "CELERY_RESULT_BACKEND=redis://localhost:6379/0" >> $GITHUB_ENV
-        echo "REDIS_HOST=localhost" >> $GITHUB_ENV
-        echo "GITHUB_ACTIONS=true" >> $GITHUB_ENV
+        echo "SECRET_KEY=django-insecure-ci-test-key" >> .env
+        echo "DB_NAME=kurs5" >> .env
+        echo "DB_USER=postgres" >> .env
+        echo "DB_PASSWORD=postgres" >> .env
+        echo "DB_HOST=localhost" >> .env
+        echo "DB_PORT=5432" >> .env
+        echo "EMAIL_HOST_USER=test@example.com" >> .env
+        echo "EMAIL_HOST_PASSWORD=test_password" >> .env
+        echo "CELERY_BROKER_URL=redis://localhost:6379/0" >> .env
+        echo "CELERY_RESULT_BACKEND=redis://localhost:6379/0" >> .env
+        echo "REDIS_HOST=localhost" >> .env
+        echo "GITHUB_ACTIONS=true" >> .env
 
     - name: Set Python path
       run: |
-        echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+        echo "PYTHONPATH=$PWD" >> .env
 
     - name: Run migrations
       run: |
