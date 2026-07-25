@@ -68,7 +68,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        poetry install --no-interaction --no-root  # Либо ключи -n --without dev // не пробовал
+        poetry install --no-interaction --no-root -n --without dev
 
     - name: Cache Poetry dependencies
       uses: actions/cache@v4
