@@ -97,9 +97,22 @@ jobs:
       run: |
         echo "PYTHONPATH=$PWD" >> .env
 
-    - name: Set environment variables
+    - name: type .env
       run: |
         cat .env || echo ".env file not found"
+
+    - name: Debug Django settings
+      run: |
+        export PYTHONPATH=$PWD
+        poetry run python -c "
+          import os
+          from dotenv import load_dotenv
+          load_dotenv()
+          print('DB_HOST from env:', os.getenv('DB_HOST'))
+          print('DB_NAME from env:', os.getenv('DB_NAME'))
+          print('DB_USER from env:', os.getenv('DB_USER'))
+          print('DB_PASSWORD from env:', os.getenv('DB_PASSWORD'))
+          "
 
     - name: Run migrations
       run: |
