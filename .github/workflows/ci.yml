@@ -68,7 +68,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        poetry install --no-interaction --no-root -n --without dev
+        poetry install --no-interaction --no-root
 
     - name: Cache Poetry dependencies
       uses: actions/cache@v4
@@ -96,6 +96,10 @@ jobs:
     - name: Set Python path
       run: |
         echo "PYTHONPATH=$PWD" >> .env
+
+    - name: Set environment variables
+      run: |
+        cat .env || echo ".env file not found"
 
     - name: Run migrations
       run: |
