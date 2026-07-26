@@ -77,21 +77,28 @@ jobs:
       run: |
         mkdir -p static
 
+    - name: Set environment variables directly
+      run: |
+        echo "SECRET_KEY=django-insecure-ci-test-key" >> $GITHUB_ENV
+        echo "DB_NAME=kurs5" >> $GITHUB_ENV
+        echo "DB_USER=postgres" >> $GITHUB_ENV
+        echo "DB_PASSWORD=postgres" >> $GITHUB_ENV
+        echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
+        echo "DB_PORT=5432" >> $GITHUB_ENV
+        echo "EMAIL_HOST_USER=test@example.com" >> $GITHUB_ENV
+        echo "EMAIL_HOST_PASSWORD=test_password" >> $GITHUB_ENV
+        echo "CELERY_BROKER_URL=redis://127.0.0.1:6379/0" >> $GITHUB_ENV
+        echo "CELERY_RESULT_BACKEND=redis://127.0.0.1:6379/0" >> $GITHUB_ENV
+        echo "REDIS_HOST=127.0.0.1" >> $GITHUB_ENV
+        echo "GITHUB_ACTIONS=true" >> $GITHUB_ENV
+
     - name: Set Python path
       run: |
         echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
 
     - name: Wait for Postgres to be ready
       run: |
-        echo "Waiting for Postgres to be ready..."
-        for i in {1..30}; do
-          if pg_isready -h 127.0.0.1 -p 5432 -U postgres; then
-            echo "Postgres is ready!"
-            break
-          fi
-          echo "Waiting for Postgres... ($i/30)"
-          sleep 2
-        done
+        pg_isready -h 127.0.0.1 -p 5432 -U postgres
 
     - name: Run migrations
       run: |
