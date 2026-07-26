@@ -77,8 +77,12 @@ jobs:
             python3.14 -m venv venv
             source venv/bin/activate
             python3.14 -m pip install --upgrade pip
-            pip install psycopg2-binary
-            pip install -r requirements.txt
+            pip install poetry
+            poetry config virtualenvs.in-project true
+            poetry install --no-interaction --no-root
+
+#            pip install psycopg2-binary
+#            pip install -r requirements.txt
           
             mkdir -p staticfiles
             cp -r staticfiles/* ${{ secrets.DEPLOY_DIR }}/staticfiles/ 2>/dev/null || true
