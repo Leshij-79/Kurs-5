@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Загружаем всю историю
-          ref: main       # Явно указываем ветку
+          ref: Feature/Kurs       # Явно указываем ветку
 
       - name: Copy project files to server
         run: |
