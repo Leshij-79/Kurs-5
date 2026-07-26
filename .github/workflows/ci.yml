@@ -98,7 +98,15 @@ jobs:
 
     - name: Wait for Postgres to be ready
       run: |
-        pg_isready -h 127.0.0.1 -p 5432 -U postgres
+        echo "Waiting for Postgres to be ready..."
+        for i in {1..30}; do
+          if pg_isready -h 127.0.0.1 -p 5432 -U postgres; then
+            echo "Postgres is ready!"
+            break
+          fi
+          echo "Waiting for Postgres... ($i/30)"
+          sleep 2
+        done
 
     - name: Run migrations
       run: |
