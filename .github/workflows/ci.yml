@@ -57,17 +57,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libpq-dev file
 
-    - name: Install Poetry
-      run: pipx install poetry
-
-    - name: Configure Poetry
-      run: |
-        poetry config virtualenvs.in-project true
-
-    - name: Install dependencies
-      run: |
-        poetry install --no-interaction --no-root  # Либо ключи -n --without dev // не пробовал
-
     - name: Cache Poetry dependencies
       uses: actions/cache@v4
       with:
@@ -93,7 +82,18 @@ jobs:
 
     - name: Set Python path
       run: |
-        echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+        echo "PYTHONPATH=$PWD" >> $GITHUB_ENV     
+
+    - name: Install Poetry
+      run: pipx install poetry
+
+    - name: Configure Poetry
+      run: |
+        poetry config virtualenvs.in-project true
+
+    - name: Install dependencies
+      run: |
+        poetry install --no-interaction --no-root
 
     - name: Run migrations
       run: |
