@@ -65,6 +65,14 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-poetry-
 
+    - name: Set PostgreSQL environment variables for psycopg2
+      run: |
+        echo "PGHOST=127.0.0.1" >> $GITHUB_ENV
+        echo "PGPORT=5432" >> $GITHUB_ENV
+        echo "PGUSER=postgres" >> $GITHUB_ENV
+        echo "PGPASSWORD=postgres" >> $GITHUB_ENV
+        echo "PGDATABASE=kurs5" >> $GITHUB_ENV
+
     - name: Set environment variables
       run: |  # Вполне возможно это и не надо будет если будет задан выше раздел env
         echo "SECRET_KEY=django-insecure-ci-test-key" >> .env
