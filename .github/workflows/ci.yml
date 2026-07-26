@@ -108,51 +108,6 @@ jobs:
           sleep 2
         done
 
-    - name: Test direct PostgreSQL connection
-      run: |
-        echo "=== Testing direct PostgreSQL connection ==="
-        PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -d kurs5 -c "SELECT version();"
-        PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -d kurs5 -c "SELECT 1 as test;"
-        echo "=== Direct connection successful! ==="
-
-    - name: Test Python psycopg2 connection
-      run: |
-        echo "=== Testing Python psycopg2 connection ==="
-        poetry run python -c "
-        import psycopg2
-        try:
-            conn = psycopg2.connect(
-                dbname='kurs5',
-                user='postgres',
-                password='postgres',
-                host='127.0.0.1',
-                port='5432'
-            )
-            cursor = conn.cursor()
-            cursor.execute('SELECT 1 as test')
-            result = cursor.fetchone()
-            print(f'Connection successful! Result: {result[0]}')
-            conn.close()
-            print('=== Python psycopg2 connection successful! ===')
-        except Exception as e:
-            print(f'Connection failed: {e}')
-            exit(1)
-        "
-
-    - name: Debug environment variables
-      run: |
-        echo "=== Environment variables ==="
-        env | grep -E "DB_|SECRET_KEY"
-        echo "=== Test Django connection ==="
-        poetry run python -c "
-        import os
-        print('DB_NAME:', os.getenv('DB_NAME'))
-        print('DB_USER:', os.getenv('DB_USER'))
-        print('DB_PASSWORD:', os.getenv('DB_PASSWORD'))
-        print('DB_HOST:', os.getenv('DB_HOST'))
-        print('DB_PORT:', os.getenv('DB_PORT'))
-        "
-
     - name: Run migrations
       run: |
         export PYTHONPATH=$PWD
