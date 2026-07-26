@@ -111,6 +111,19 @@ jobs:
         echo "=== Python environment ==="
         poetry run python -c "from dotenv import load_dotenv; import os; load_dotenv(); print('DB_HOST:', os.getenv('DB_HOST')); print('DB_NAME:', os.getenv('DB_NAME'))"
 
+    - name: Debug Django settings
+      run: |
+        poetry run python manage.py shell -c "
+        import os
+        from django.conf import settings
+        print('DB_NAME:', os.getenv('DB_NAME'))
+        print('DB_USER:', os.getenv('DB_USER'))
+        print('DB_PASSWORD:', os.getenv('DB_PASSWORD'))
+        print('DB_HOST:', os.getenv('DB_HOST'))
+        print('DB_PORT:', os.getenv('DB_PORT'))
+        print('Settings DATABASES:', settings.DATABASES)
+        "
+
     - name: Run migrations
       run: |
         export PYTHONPATH=$PWD
