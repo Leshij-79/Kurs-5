@@ -13,16 +13,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     # needs: lint
-    env:
-      PYTHONPATH: $PWD
     # Тут можно указать раздел env: и задать переменные из секретов
     services:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: postgres
+          POSTGRES_USER: postgres  # Тут можно указать либо из раздела выше ${{ env.ПЕРЕМЕННАЯ }}, либо грузим из секретов
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: kurs5
+          POSTGRES_DB: lms
         ports:
           - 5432:5432
         options: >-
@@ -51,7 +49,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.14'
+        python-version: '3.12'
         cache: 'pip'
 
     - name: Install system dependencies
@@ -68,7 +66,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        poetry install --no-interaction --no-root
+        poetry install --no-interaction --no-root  # Либо ключи -n --without dev // не пробовал
 
     - name: Cache Poetry dependencies
       uses: actions/cache@v4
@@ -79,40 +77,23 @@ jobs:
           ${{ runner.os }}-poetry-
 
     - name: Set environment variables
-      run: | 
-        echo "SECRET_KEY=django-insecure-ci-test-key" >> .env
-        echo "DB_NAME=kurs5" >> .env
-        echo "DB_USER=postgres" >> .env
-        echo "DB_PASSWORD=postgres" >> .env
-        echo "DB_HOST=127.0.0.1" >> .env
-        echo "DB_PORT=5432" >> .env
-        echo "EMAIL_HOST_USER=test@example.com" >> .env
-        echo "EMAIL_HOST_PASSWORD=test_password" >> .env
-        echo "CELERY_BROKER_URL=redis://127.0.0.1:6379/0" >> .env
-        echo "CELERY_RESULT_BACKEND=redis://127.0.0.1:6379/0" >> .env
-        echo "REDIS_HOST=127.0.0.1" >> .env
-        echo "GITHUB_ACTIONS=true" >> .env
+      run: |  # Вполне возможно это и не надо будет если будет задан выше раздел env
+        echo "SECRET_KEY=django-insecure-ci-test-key" >> $GITHUB_ENV
+        echo "DB_NAME=kurs5" >> $GITHUB_ENV
+        echo "DB_USER=postgres" >> $GITHUB_ENV
+        echo "DB_PASSWORD=postgres" >> $GITHUB_ENV
+        echo "DB_HOST=localhost" >> $GITHUB_ENV
+        echo "DB_PORT=5432" >> $GITHUB_ENV
+        echo "EMAIL_HOST_USER=test@example.com" >> $GITHUB_ENV
+        echo "EMAIL_HOST_PASSWORD=test_password" >> $GITHUB_ENV
+        echo "CELERY_BROKER_URL=redis://localhost:6379/0" >> $GITHUB_ENV
+        echo "CELERY_RESULT_BACKEND=redis://localhost:6379/0" >> $GITHUB_ENV
+        echo "REDIS_HOST=localhost" >> $GITHUB_ENV
+        echo "GITHUB_ACTIONS=true" >> $GITHUB_ENV
 
     - name: Set Python path
       run: |
-        echo "PYTHONPATH=$PWD" >> .env
-
-    - name: type .env
-      run: |
-        cat .env || echo ".env file not found"
-
-    - name: Debug Django settings
-      run: |
-        export PYTHONPATH=$PWD
-        poetry run python -c "
-          import os
-          from dotenv import load_dotenv
-          load_dotenv()
-          print('DB_HOST from env:', os.getenv('DB_HOST'))
-          print('DB_NAME from env:', os.getenv('DB_NAME'))
-          print('DB_USER from env:', os.getenv('DB_USER'))
-          print('DB_PASSWORD from env:', os.getenv('DB_PASSWORD'))
-          "
+        echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
 
     - name: Run migrations
       run: |
