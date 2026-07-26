@@ -88,6 +88,13 @@ jobs:
         echo "REDIS_HOST=127.0.0.1" >> .env
         echo "GITHUB_ACTIONS=true" >> .env
 
+    - name: Export environment variables from .env
+      run: |
+        set -a
+        source .env
+        set +a
+        env | grep -E "DB_|SECRET_KEY"
+
     - name: Set Python path
       run: |
         echo "PYTHONPATH=$PWD" >> $GITHUB_ENV     
