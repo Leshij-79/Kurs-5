@@ -75,21 +75,18 @@ jobs:
 
     - name: Set environment variables
       run: |  # Вполне возможно это и не надо будет если будет задан выше раздел env
-        cat > /home/runner/work/Kurs-5/Kurs-5/.env << 'EOF'
-        SECRET_KEY=django-insecure-ci-test-key
-        DB_NAME=kurs5
-        DB_USER=postgres
-        DB_PASSWORD=postgres
-        DB_HOST=127.0.0.1
-        DB_PORT=5432
-        EMAIL_HOST_USER=test@example.com
-        EMAIL_HOST_PASSWORD=test_password
-        CELERY_BROKER_URL=redis://127.0.0.1:6379/0
-        CELERY_RESULT_BACKEND=redis://127.0.0.1:6379/0
-        REDIS_HOST=127.0.0.1
-        GITHUB_ACTIONS=true
-        EOF
-
+        echo "SECRET_KEY=django-insecure-ci-test-key" >> .env
+        echo "DB_NAME=kurs5" >> .env
+        echo "DB_USER=postgres" >> .env
+        echo "DB_PASSWORD=postgres" >> .env
+        echo "DB_HOST=127.0.0.1" >> .env
+        echo "DB_PORT=5432" >> .env
+        echo "EMAIL_HOST_USER=test@example.com" >> .env
+        echo "EMAIL_HOST_PASSWORD=test_password" >> .env
+        echo "CELERY_BROKER_URL=redis://127.0.0.1:6379/0" >> .env
+        echo "CELERY_RESULT_BACKEND=redis://127.0.0.1:6379/0" >> .env
+        echo "REDIS_HOST=127.0.0.1" >> .env
+        echo "GITHUB_ACTIONS=true" >> .env
 
     - name: Export environment variables from .env
       run: |
