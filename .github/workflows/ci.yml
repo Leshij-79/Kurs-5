@@ -80,10 +80,7 @@ jobs:
             pip install poetry
             poetry config virtualenvs.in-project true
             poetry install --no-interaction --no-root
-
-#            pip install psycopg2-binary
-#            pip install -r requirements.txt
-          
+      
             mkdir -p staticfiles
             cp -r staticfiles/* ${{ secrets.DEPLOY_DIR }}/staticfiles/ 2>/dev/null || true
             python manage.py migrate  # не обязательно, тк это уже есть в docker-compose.yml
