@@ -67,18 +67,18 @@ jobs:
 
     - name: Set environment variables
       run: |  # Вполне возможно это и не надо будет если будет задан выше раздел env
-        echo "SECRET_KEY=django-insecure-ci-test-key" >> $GITHUB_ENV
-        echo "DB_NAME=kurs5" >> $GITHUB_ENV
-        echo "DB_USER=postgres" >> $GITHUB_ENV
-        echo "DB_PASSWORD=postgres" >> $GITHUB_ENV
-        echo "DB_HOST=localhost" >> $GITHUB_ENV
-        echo "DB_PORT=5432" >> $GITHUB_ENV
-        echo "EMAIL_HOST_USER=test@example.com" >> $GITHUB_ENV
-        echo "EMAIL_HOST_PASSWORD=test_password" >> $GITHUB_ENV
-        echo "CELERY_BROKER_URL=redis://localhost:6379/0" >> $GITHUB_ENV
-        echo "CELERY_RESULT_BACKEND=redis://localhost:6379/0" >> $GITHUB_ENV
-        echo "REDIS_HOST=localhost" >> $GITHUB_ENV
-        echo "GITHUB_ACTIONS=true" >> $GITHUB_ENV
+        echo "SECRET_KEY=django-insecure-ci-test-key" >> .env
+        echo "DB_NAME=kurs5" >> .env
+        echo "DB_USER=postgres" >> .env
+        echo "DB_PASSWORD=postgres" >> .env
+        echo "DB_HOST=127.0.0.1" >> .env
+        echo "DB_PORT=5432" >> .env
+        echo "EMAIL_HOST_USER=test@example.com" >> .env
+        echo "EMAIL_HOST_PASSWORD=test_password" >> .env
+        echo "CELERY_BROKER_URL=redis://127.0.0.1:6379/0" >> .env
+        echo "CELERY_RESULT_BACKEND=redis://127.0.0.1:6379/0" >> .env
+        echo "REDIS_HOST=127.0.0.1" >> .env
+        echo "GITHUB_ACTIONS=true" >> .env
 
     - name: Set Python path
       run: |
@@ -94,6 +94,14 @@ jobs:
     - name: Install dependencies
       run: |
         poetry install --no-interaction --no-root
+
+    - name: Debug .env file
+      run: |
+        echo "=== .env file content ==="
+        cat .env
+        echo "=========================="
+        echo "=== Python environment ==="
+        poetry run python -c "from dotenv import load_dotenv; import os; load_dotenv(); print('DB_HOST:', os.getenv('DB_HOST')); print('DB_NAME:', os.getenv('DB_NAME'))"
 
     - name: Run migrations
       run: |
